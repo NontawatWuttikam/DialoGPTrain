@@ -326,7 +326,7 @@ def train(args, train_dataset, model: PreTrainedModel, tokenizer: PreTrainedToke
 
 # Evaluation of some model
 
-def evaluate(args, model: PreTrainedModel, tokenizer: PreTrainedTokenizer, df_trn, df_val, prefix="") -> Dict:
+def evaluate(args, model: PreTrainedModel, tokenizer: PreTrainedTokenizer, df_trn, df_val, prefix="",write_file = True) -> Dict:
     # Loop to handle MNLI double evaluation (matched, mis-matched)
     eval_output_dir = args.output_dir
 
@@ -350,9 +350,12 @@ def evaluate(args, model: PreTrainedModel, tokenizer: PreTrainedTokenizer, df_tr
         model = torch.nn.DataParallel(model)
 
     # Eval!
-    logger.info("***** Running evaluation {} *****".format(prefix))
-    logger.info("  Num examples = %d", len(eval_dataset))
-    logger.info("  Batch size = %d", args.eval_batch_size)
+    if logger is not None:
+        logger.info("***** Running evaluation {} *****".format(prefix))
+        logger.info("  Num examples = %d", len(eval_dataset))
+        logger.info("  Batch size = %d", args.eval_batch_size)
+    else:
+        print("***** Running evaluation *****")
     eval_loss = 0.0
     nb_eval_steps = 0
     model.eval()
@@ -372,13 +375,17 @@ def evaluate(args, model: PreTrainedModel, tokenizer: PreTrainedTokenizer, df_tr
     perplexity = torch.exp(torch.tensor(eval_loss))
 
     result = {"perplexity": perplexity}
-
-    output_eval_file = os.path.join(eval_output_dir, prefix, "eval_results.txt")
-    with open(output_eval_file, "w") as writer:
-        logger.info("***** Eval results {} *****".format(prefix))
-        for key in sorted(result.keys()):
-            logger.info("  %s = %s", key, str(result[key]))
-            writer.write("%s = %s\n" % (key, str(result[key])))
+    print(result)
+    if write_file:
+        output_eval_file = os.path.join(eval_output_dir, prefix, "eval_results.txt")
+        with open(output_eval_file, "w") as writer:
+            if logger is not None:
+                logger.info("***** Eval results {} *****".format(prefix))
+            else: print("***** Eval results {} *****".format(prefix))
+            for key in sorted(result.keys()):
+                if logger is not None:
+                    logger.info("  %s = %s", key, str(result[key]))
+                writer.write("%s = %s\n" % (key, str(result[key])))
 
     return result
 
@@ -554,36 +561,37 @@ def get_counter_and_lens(data, tokenizer):
     
     return list(map(len, toks)), Counter(flatten(toks)), Counter(' '.join(data).split())
 
-df = pd.read_excel('train_sessions.xlsx')
-args = Args()
+if __name__ == "__main__":
+    df = pd.read_excel('train_sessions.xlsx')
+    args = Args()
 
-trn_df, val_df = train_test_split(df, test_size = 0.1)
+    trn_df, val_df = train_test_split(df, test_size = 0.1)
 
-tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path, cache_dir=args.cache_dir)
-lens, tok_cnt, word_cnt = get_counter_and_lens(trn_df[df.columns].apply(lambda x: ' '.join(x.astype(str)), axis = 1), tokenizer)
+    tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path, cache_dir=args.cache_dir)
+    lens, tok_cnt, word_cnt = get_counter_and_lens(trn_df[df.columns].apply(lambda x: ' '.join(x.astype(str)), axis = 1), tokenizer)
 
-from torch.utils.tensorboard import SummaryWriter
+    from torch.utils.tensorboard import SummaryWriter
 
-trn_df = trn_df.drop('Unnamed: 0',axis=1)
-val_df = val_df.drop('Unnamed: 0',axis=1)
+    trn_df = trn_df.drop('Unnamed: 0',axis=1)
+    val_df = val_df.drop('Unnamed: 0',axis=1)
 
-idx_to_rm_trn = []
-idx_to_rm_val = []
+    idx_to_rm_trn = []
+    idx_to_rm_val = []
 
-for k,row in trn_df.iterrows():
-  for i, item in row.iteritems():
-    if item is None: idx_to_rm_trn.append(k); break
-    elif type(item) is not str: idx_to_rm_trn.append(k); break
-    elif item == "": idx_to_rm_trn.append(k); break
+    for k,row in trn_df.iterrows():
+        for i, item in row.iteritems():
+            if item is None: idx_to_rm_trn.append(k); break
+            elif type(item) is not str: idx_to_rm_trn.append(k); break
+            elif item == "": idx_to_rm_trn.append(k); break
 
-for k,row in val_df.iterrows():
-  for i, item in row.iteritems():
-    if item is None: idx_to_rm_val.append(k); break
-    elif type(item) is not str: idx_to_rm_val.append(k); break
-    elif item == "": idx_to_rm_val.append(k); break
+    for k,row in val_df.iterrows():
+        for i, item in row.iteritems():
+            if item is None: idx_to_rm_val.append(k); break
+            elif type(item) is not str: idx_to_rm_val.append(k); break
+            elif item == "": idx_to_rm_val.append(k); break
 
-trn_df = trn_df.drop(idx_to_rm_trn, axis = 0)
-val_df = val_df.drop(idx_to_rm_val, axis = 0)
+    trn_df = trn_df.drop(idx_to_rm_trn, axis = 0)
+    val_df = val_df.drop(idx_to_rm_val, axis = 0)
 
-# print(trn_df, val_df)
-main(trn_df, val_df)
+    # print(trn_df, val_df)
+    main(trn_df, val_df)
