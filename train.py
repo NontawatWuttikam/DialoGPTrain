@@ -1,3 +1,10 @@
+import signal
+
+def print_linenum(signum, frame):
+    print ("Currently at line", frame.f_lineno)
+
+signal.signal(signal.SIGINT, print_linenum)
+
 import torch
 import glob
 import logging
@@ -38,10 +45,10 @@ from transformers import (
 
 class Args():
     def __init__(self):
-        self.output_dir = 'output'
+        self.output_dir = 'output_small'
         self.model_type = 'gpt2'
-        self.model_name_or_path = 'microsoft/DialoGPT-medium'
-        self.config_name = 'microsoft/DialoGPT-medium'
+        self.model_name_or_path = 'microsoft/DialoGPT-small'
+        self.config_name = 'microsoft/DialoGPT-small'
         self.tokenizer_name = 'microsoft/DialoGPT-large'
         self.cache_dir = 'cached'
         self.block_size = 512
@@ -265,20 +272,28 @@ def train(args, train_dataset, model: PreTrainedModel, tokenizer: PreTrainedToke
                 loss.backward()
                 logger.info("BACK PROP DONE!")
             logger.info("GET TR LOSS..")
-            tr_loss += loss.item()
-            # tr_loss += loss
+            # tr_loss += loss.item()
+            tr_loss += loss
             # print("TR_LOSS", tr_loss)
-            logger.info("CLIP_GRAD_NORM...")
+            logger.info("GRAD_AC...")
             if (step + 1) % args.gradient_accumulation_steps == 0:
+                model.parameters()
+                args.max_grad_norm
+                logger.info("GRAD_AC...")
                 if args.fp16:
                     torch.nn.utils.clip_grad_norm_(amp.master_params(optimizer), args.max_grad_norm)
                 else:
+                    logger.info("CLIP GRAD NORM...")
                     torch.nn.utils.clip_grad_norm_(model.parameters(), args.max_grad_norm)
+                logger.info("CLIP GRAD NORM DONE...")
                 optimizer.step()
+                logger.info("OP STEP...")
                 scheduler.step()  # Update learning rate schedule
+                logger.info("SCHED STEP...")
                 model.zero_grad()
+                logger.info("RESET GRAD...")
                 global_step += 1
-                logger.info("UPDATE LRATE...")
+                logger.info("INC GLOBAL STEP...")
                 if args.local_rank in [-1, 0] and args.logging_steps > 0 and global_step % args.logging_steps == 0:
                     # Log metrics
                     if (
@@ -368,7 +383,8 @@ def evaluate(args, model: PreTrainedModel, tokenizer: PreTrainedTokenizer, df_tr
         with torch.no_grad():
             outputs = model(inputs, labels=labels)
             lm_loss = outputs[0]
-            eval_loss += lm_loss.mean().item()
+            # eval_loss += lm_loss.mean().item()
+            eval_loss += lm_loss.mean()
         nb_eval_steps += 1
 
     eval_loss = eval_loss / nb_eval_steps
@@ -463,8 +479,8 @@ def main(df_trn, df_val):
 
     # Setup CUDA, GPU & distributed training
     device = torch.device("cuda")
-    # args.n_gpu = torch.cuda.device_count()
-    args.n_gpu = 1
+    args.n_gpu = torch.cuda.device_count()
+    # args.n_gpu = 1
     args.device = device
 
     # Setup logging

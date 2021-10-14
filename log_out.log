@@ -22632,3 +22632,180 @@ Saving features into cached file cached/gpt2_cached_lm_512
   Batch size = 1
 ***** Eval results  *****
   perplexity = tensor(255.0162)
+Training/evaluation parameters <__main__.Args object at 0x7f2045dc5280>
+Creating features from dataset file at cached
+Saving features into cached file cached/gpt2_cached_lm_512
+***** Running training *****
+  Num examples = 110
+  Num Epochs = 15
+  Instantaneous batch size per GPU = 1
+  Total train batch size (w. parallel, distributed & accumulation) = 4
+  Gradient Accumulation steps = 1
+  Total optimization steps = 405
+BACK PROP....
+BACK PROP DONE!
+GET TR LOSS..
+CLIP_GRAD_NORM...
+Training/evaluation parameters <__main__.Args object at 0x7f3d4b1ada90>
+Creating features from dataset file at cached
+Saving features into cached file cached/gpt2_cached_lm_512
+***** Running training *****
+  Num examples = 111
+  Num Epochs = 15
+  Instantaneous batch size per GPU = 1
+  Total train batch size (w. parallel, distributed & accumulation) = 4
+  Gradient Accumulation steps = 1
+  Total optimization steps = 405
+Training/evaluation parameters <__main__.Args object at 0x7f1ed2a95a90>
+Creating features from dataset file at cached
+Saving features into cached file cached/gpt2_cached_lm_512
+***** Running training *****
+  Num examples = 107
+  Num Epochs = 15
+  Instantaneous batch size per GPU = 1
+  Total train batch size (w. parallel, distributed & accumulation) = 4
+  Gradient Accumulation steps = 1
+  Total optimization steps = 390
+BACK PROP....
+BACK PROP DONE!
+GET TR LOSS..
+CLIP_GRAD_NORM...
+Training/evaluation parameters <__main__.Args object at 0x7f53a511aa90>
+Creating features from dataset file at cached
+Saving features into cached file cached/gpt2_cached_lm_512
+Training/evaluation parameters <__main__.Args object at 0x7f56741ae520>
+Creating features from dataset file at cached
+Saving features into cached file cached/gpt2_cached_lm_512
+***** Running training *****
+  Num examples = 105
+  Num Epochs = 15
+  Instantaneous batch size per GPU = 1
+  Total train batch size (w. parallel, distributed & accumulation) = 4
+  Gradient Accumulation steps = 1
+  Total optimization steps = 390
+BACK PROP....
+BACK PROP DONE!
+GET TR LOSS..
+CLIP_GRAD_NORM...
+Training/evaluation parameters <__main__.Args object at 0x7f30e00ca520>
+Creating features from dataset file at cached
+Saving features into cached file cached/gpt2_cached_lm_512
+***** Running training *****
+  Num examples = 106
+  Num Epochs = 15
+  Instantaneous batch size per GPU = 1
+  Total train batch size (w. parallel, distributed & accumulation) = 4
+  Gradient Accumulation steps = 1
+  Total optimization steps = 390
+BACK PROP....
+BACK PROP DONE!
+GET TR LOSS..
+CLIP_GRAD_NORM...
+Training/evaluation parameters <__main__.Args object at 0x7f15364f46a0>
+Creating features from dataset file at cached
+Saving features into cached file cached/gpt2_cached_lm_512
+***** Running training *****
+  Num examples = 110
+  Num Epochs = 15
+  Instantaneous batch size per GPU = 1
+  Total train batch size (w. parallel, distributed & accumulation) = 4
+  Gradient Accumulation steps = 1
+  Total optimization steps = 405
+BACK PROP....
+BACK PROP DONE!
+GET TR LOSS..
+CLIP_GRAD_NORM...
+Training/evaluation parameters <__main__.Args object at 0x7fb9974c5730>
+Creating features from dataset file at cached
+Saving features into cached file cached/gpt2_cached_lm_512
+***** Running training *****
+  Num examples = 113
+  Num Epochs = 15
+  Instantaneous batch size per GPU = 1
+  Total train batch size (w. parallel, distributed & accumulation) = 4
+  Gradient Accumulation steps = 1
+  Total optimization steps = 420
+BACK PROP....
+BACK PROP DONE!
+GET TR LOSS..
+CLIP_GRAD_NORM...
+GRAD_AC...
+Training/evaluation parameters <__main__.Args object at 0x7f8ad8969790>
+Creating features from dataset file at cached
+Saving features into cached file cached/gpt2_cached_lm_512
+***** Running training *****
+  Num examples = 113
+  Num Epochs = 15
+  Instantaneous batch size per GPU = 1
+  Total train batch size (w. parallel, distributed & accumulation) = 4
+  Gradient Accumulation steps = 1
+  Total optimization steps = 420
+BACK PROP....
+BACK PROP DONE!
+GET TR LOSS..
+CLIP_GRAD_NORM...
+GRAD_AC...
+Training/evaluation parameters <__main__.Args object at 0x7f36c69708e0>
+Creating features from dataset file at cached
+Saving features into cached file cached/gpt2_cached_lm_512
+***** Running training *****
+  Num examples = 111
+  Num Epochs = 15
+  Instantaneous batch size per GPU = 1
+  Total train batch size (w. parallel, distributed & accumulation) = 4
+  Gradient Accumulation steps = 1
+  Total optimization steps = 405
+BACK PROP....
+BACK PROP DONE!
+GET TR LOSS..
+GRAD_AC...
+GRAD_AC...
+CLIP GRAD NORM...
+Training/evaluation parameters <__main__.Args object at 0x7f45471b2a90>
+Creating features from dataset file at cached
+Saving features into cached file cached/gpt2_cached_lm_512
+***** Running training *****
+  Num examples = 106
+  Num Epochs = 15
+  Instantaneous batch size per GPU = 1
+  Total train batch size (w. parallel, distributed & accumulation) = 4
+  Gradient Accumulation steps = 1
+  Total optimization steps = 390
+BACK PROP....
+BACK PROP DONE!
+GET TR LOSS..
+GRAD_AC...
+GRAD_AC...
+CLIP GRAD NORM...
+Training/evaluation parameters <__main__.Args object at 0x7f6b00cd8790>
+Creating features from dataset file at cached
+Saving features into cached file cached/gpt2_cached_lm_512
+***** Running training *****
+  Num examples = 114
+  Num Epochs = 15
+  Instantaneous batch size per GPU = 1
+  Total train batch size (w. parallel, distributed & accumulation) = 4
+  Gradient Accumulation steps = 1
+  Total optimization steps = 420
+BACK PROP....
+BACK PROP DONE!
+GET TR LOSS..
+GRAD_AC...
+GRAD_AC...
+CLIP GRAD NORM...
+Training/evaluation parameters <__main__.Args object at 0x7f958eaff940>
+Creating features from dataset file at cached
+Saving features into cached file cached/gpt2_cached_lm_512
+***** Running training *****
+  Num examples = 112
+  Num Epochs = 15
+  Instantaneous batch size per GPU = 1
+  Total train batch size (w. parallel, distributed & accumulation) = 4
+  Gradient Accumulation steps = 1
+  Total optimization steps = 420
+BACK PROP....
+BACK PROP DONE!
+GET TR LOSS..
+GRAD_AC...
+GRAD_AC...
+CLIP GRAD NORM...
